@@ -47,19 +47,15 @@ public class QuestionService
         NextQuestion nextQuestion = new NextQuestion();
         List<Question> questionList = questionRepository.findAll();
         boolean flag = true;
+        int i=0;
         for(Question q : questionList)
         {
-            if(flag)
-            {
-                if(q.getId() == nextQuestionRequestDTO.getId())
-                    flag = false;
-            }
-            else
-            {
-                nextQuestion.setId(q.getId());
-                nextQuestion.setQuestion(q.getQuestion());
-            }
+             i++;
+             if(q.getId() == nextQuestionRequestDTO.getId())
+                break;
         }
+        nextQuestion.setId(questionList.get(i).getId());
+        nextQuestion.setQuestion(questionList.get(i).getQuestion());
         NextQuestionResponseDTO nextQuestionResponseDTO = new NextQuestionResponseDTO(question.getAnswer(), nextQuestion);
         return nextQuestionResponseDTO;
     }
